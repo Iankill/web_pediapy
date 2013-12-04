@@ -32,10 +32,5 @@ function retrievePhilosophy(random){
                 
             };
 
-            ws.onclose = function(){
-            	console.log("Salut");
-            };
-
-
 }
 
