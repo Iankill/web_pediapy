@@ -1,0 +1,21 @@
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+<script type=text/javascript src="{{ url_for('static', filename='webs.js') }}"></script>
+
+<div>
+	
+
+	<input id="article" type="text" class="form-control" placeholder="Article to search">
+	<button type="button" class="btn btn-default" onclick="retrievePhilosophy()">Search</button>
+	<button type="button" class="btn btn-default" onclick="retrievePhilosophy(true)">Random</button>
+	<p id="number"></p>
+</div>
+
+<ul class="list-group" id="article-list">
+
+</ul>
+
+
+{% endblock%}
+

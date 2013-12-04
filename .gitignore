@@ -1,0 +1,11 @@
+# Compile python #
+*.pyc
+
+# Venv folders #
+bin
+include
+lib
+
+# Other #
+.DS_Store
+.Python
