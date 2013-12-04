@@ -40,22 +40,6 @@ def echo_socket(ws):
 
 @app.route('/')
 def index():
-
-	#test = "Salut"
-	#message = None
-	#filename = None
-	#if request.method == 'POST':
-	#	message = request.form['field1']
-	#	if wiki.is_valid_article(message): 
-	#		filename = str(uuid.uuid4())
-	#		with open("static/articles/"+filename,"w") as outfile:   #Full file path 
-	#			pass
-	#		if ws is None:
-	#			print "WTFF WQSDQSDQSDQS"
-	#		thread.start_new_thread(wiki.new_search, (message, filename, ws,))
-	#	else:
-	#		message = "Article is not valid"
-
 	return render_template('not_index.html')
 
 
