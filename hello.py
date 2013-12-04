@@ -1,10 +1,9 @@
 from flask import Flask, render_template, url_for
 from flask_bootstrap import Bootstrap
-from flask_wtf import Form
-from wtforms import TextField, SubmitField
+
 from time import gmtime, strftime
 
-import pediapy
+from pediapy import pediapy
 from flask import request
 import thread
 import uuid
@@ -19,9 +18,6 @@ Bootstrap(app)
 sockets = Sockets(app)
 app.config['SECRET_KEY'] = 'devkey'
 
-class MyForm(Form):
-	field1 = TextField('Search')
-	submit_button = SubmitField("Search")
 
 
 @app.route('/get_random_article/')
