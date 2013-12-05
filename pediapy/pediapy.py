@@ -3,8 +3,6 @@ import re
 from lxml import html
 
 
-
-
 class BadArticleError(Exception): pass
 class LoopingError(Exception): pass
 class NoArticleError(Exception): pass
@@ -94,12 +92,15 @@ class Pediapy():
 				yield self.article
 			except BadArticleError:
 				print u"Bad Article Error"
+				yield "Bad Article Error"
 				break
 			except LoopingError:
 				print u"Detected a Loop"
+				yield "Detected a Loop"
 				break
 			except NoArticleError:
 				print u"No article Error"
+				yield "No article Error"
 				break
 
 

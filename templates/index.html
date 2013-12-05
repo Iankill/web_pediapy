@@ -7,7 +7,7 @@ Search for Philosophy
 {% block content %}
 <script type=text/javascript src="{{ url_for('static', filename='webs.js') }}"></script>
 
-<div class="container">
+<div id="container" class="container">
 	
 	<div class="row">
 		<div class="col-md-12">
@@ -18,7 +18,7 @@ Search for Philosophy
 
 
 	<div class="row">
-		<div class="col-xs-12 col-sm-8 col-md-8">
+		<div class="col-xs-12 col-sm-8 col-md-6">
 			<input id="article" type="text" class="form-control" placeholder="Article to search">
 		</div>
 		<div class="col-md-4">
@@ -29,13 +29,14 @@ Search for Philosophy
 				
 	</div>
 
-	<p id="number"></p>
-	<div class="row">
-		<div class="col-sm-8 col-md-4">
-			<ul class="list-group" id="article-list">
+	<br/>
 
-			</ul>
+	<div id="result" class="row">
+		<div class="col-sm-8 col-md-4">
+			<ul class="list-group" id="article-list"></ul>
 		</div>
+
+
 	</div>
 	
 
