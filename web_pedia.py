@@ -22,8 +22,8 @@ def echo_socket(ws):
 			ws.send(article)
 
 
-@app.route('/')
+@app.route('/pediapy')
 def index():
-	return render_template('not_index.html')
+	return render_template('index.html')
 
 
