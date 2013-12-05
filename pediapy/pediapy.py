@@ -3,6 +3,8 @@ import re
 from lxml import html
 
 
+
+
 class BadArticleError(Exception): pass
 class LoopingError(Exception): pass
 class NoArticleError(Exception): pass
@@ -24,7 +26,6 @@ class Pediapy():
 		return html.parse(fh)
 	
 	def search(self,parsed):
-		
 		element_p_pos = 0
 		pos = None
 	
@@ -91,15 +92,12 @@ class Pediapy():
 				self.article = self.search(self.get_parsed_link(self.get_link(self.article)))	
 				yield self.article
 			except BadArticleError:
-				print u"Bad Article Error"
 				yield "Bad Article Error"
 				break
 			except LoopingError:
-				print u"Detected a Loop"
 				yield "Detected a Loop"
 				break
 			except NoArticleError:
-				print u"No article Error"
 				yield "No article Error"
 				break
 
@@ -121,6 +119,6 @@ class Pediapy():
 
 if __name__ == "__main__":
 	wiki = Pediapy()
-	wikiGenerator = wiki.new_search("France")
+	wikiGenerator = wiki.new_search()
 	for article in wikiGenerator:
 		print article
