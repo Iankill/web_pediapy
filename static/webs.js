@@ -1,6 +1,8 @@
 function clearAll(){
 	document.getElementById("article-list").innerHTML = '';
-	document.getElementById("number").innerHTML = "0";  
+	document.getElementById("number").innerHTML = "0"; 
+    document.getElementById("article").value = "";
+
     if (document.getElementById("rowAlert")){
         var container = document.getElementById("container");
         container.removeChild(document.getElementById("rowAlert"));   
@@ -11,16 +13,45 @@ function clearAll(){
 }
 
 
+function createListItem(article){
+    var newAItem = document.createElement("a");
+    var link = "http://en.wikipedia.org/wiki/" + article;
+    var articleItem = decodeURIComponent(article).replace(/[_#]/g," ");
+    newAItem.href = link;
+    newAItem.className = "list-group-item";
+    newAItem.innerHTML = articleItem;
+
+    return newAItem;
+}
+
+
+function handleReceivedMsg(received_msg){
+    switch(received_msg){
+        case "Detected a Loop":
+            handleErrors(received_msg);
+            break;
+        case "Bad Article Error":
+            handleErrors(received_msg);
+            break;
+        case "No article Error":
+            handleErrors(received_msg);
+            break;
+        default:
+            var div = document.getElementById("article-list");        
+            var newli = createListItem(received_msg);
+            div.appendChild(newli);
+    }
+    
+}
+
 
 function retrievePhilosophy(random){
 
-	//clearAll();
 	article = document.getElementById("article").value;
-	var ul = document.getElementById("article-list");
-    if (ul.hasChildNodes() == true){
+	var div = document.getElementById("article-list");
+    if (div.hasChildNodes() == true){
         clearAll();
     }
-    console.log(ul.hasChildNodes());
 	var i = 0;
 
 	var ws = new WebSocket("ws://" + location.host + "/echo");
@@ -29,14 +60,16 @@ function retrievePhilosophy(random){
             		i++;
             		//document.getElementById("number").innerHTML = i; 
                     var received_msg = evt.data;
-                    if (received_msg == "Detected a Loop"){
+                    handleReceivedMsg(received_msg);
+                    document.getElementById("article-list").lastChild.scrollIntoView();
+                    /*if (received_msg == "Detected a Loop"){
                         handleErrors();
                     } else {
-                       var newli = document.createElement("li");
+                        var newli = document.createElement("li");
                         newli.setAttribute("class","list-group-item");
                         ul.appendChild(newli);
                         newli.innerHTML = received_msg; 
-                    }
+                    }*/
                     
             };
 
@@ -51,7 +84,7 @@ function retrievePhilosophy(random){
 
 }
 
-function handleErrors(){
+function handleErrors(errorMsg){
     var rowAlert = document.createElement("div");
     rowAlert.className = "center-block row";
     rowAlert.id = "rowAlert";
@@ -59,7 +92,7 @@ function handleErrors(){
 
     rowAlert.appendChild(divAlert);
 
-    var node = document.createTextNode("Detected a Loop");
+    var node = document.createTextNode(errorMsg);
     divAlert.appendChild(node);
     divAlert.className = "alert alert-danger col-md-4";
 
