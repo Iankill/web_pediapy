@@ -50,25 +50,30 @@ function createListItem(article){
 }
 
 
-function handleReceivedMsg(received_msg){
+function handleReceivedMsg(received_msg, path_number){
     switch(received_msg){
         case "Detected a Loop":
             handleErrors(received_msg);
+            loopNumber(path_number, false);
             break;
         case "Bad Article Error":
             handleErrors(received_msg);
+            loopNumber(path_number, false);
             break;
         case "No article Error":
             handleErrors(received_msg);
+            loopNumber(path_number, false);
             break;
         case "NotValidArticle":
             var errorMsg = "This is not a valid article. Please enter a valid one."
             handleErrors(errorMsg);
+            //loopNumber(path_number, false);
             break;
         default:
             var div = document.getElementById("article-list");        
             var newli = createListItem(received_msg);
             div.appendChild(newli);
+            loopNumber(path_number, false);
     }
     
 }
@@ -83,20 +88,12 @@ function retrievePhilosophy(random){
 
 	var ws = new WebSocket("ws://" + location.host + "/echo");
             ws.onmessage = function(evt){
-                    loopNumber(i);
-            		i++;
-            		//document.getElementById("number").innerHTML = i; 
                     var received_msg = evt.data;
-                    handleReceivedMsg(received_msg);
-                    document.getElementById("article-list").lastChild.scrollIntoView();
-                    /*if (received_msg == "Detected a Loop"){
-                        handleErrors();
-                    } else {
-                        var newli = document.createElement("li");
-                        newli.setAttribute("class","list-group-item");
-                        ul.appendChild(newli);
-                        newli.innerHTML = received_msg; 
-                    }*/
+                    handleReceivedMsg(received_msg, i);
+                    i++;
+                    if (i > 0) {
+                      document.getElementById("article-list").lastChild.scrollIntoView();  
+                    }
                     
             };
 
@@ -130,22 +127,28 @@ function handleErrors(errorMsg){
 }
 
 
-function loopNumber(i){
+function loopNumber(i,error){
+    var stringNumber;
+    var divNumber;
     if (i == 0){
-        var divNumber = document.createElement("div"); 
+        divNumber = document.createElement("div"); 
         divNumber.id = "number";
         var element = document.getElementById("result");
         element.appendChild(divNumber);
+        stringNumber = " article to Philosophy";
     } else {
-        var divNumber = document.getElementById("number");
+        divNumber = document.getElementById("number");
         var stringNumber;
         if (i == 1){
             stringNumber = " article to Philosophy";
         } else {
             stringNumber = " articles to Philosophy";
         }
-
-        divNumber.innerHTML = i + stringNumber;
     }
 
+    if (error) {
+        divNumber.innerHTML = "The path to Philosophy seems to be broken :(";
+    } else {
+        divNumber.innerHTML = i + stringNumber; 
+    }
 }
