@@ -18,8 +18,11 @@ def echo_socket(ws):
 	while True:
 		message = ws.receive()
 		wiki_generator = wiki.new_search(message)
-		for article in wiki_generator:
-			ws.send(article)
+		try:
+			for article in wiki_generator:
+				ws.send(article)
+		except pediapy.NotValidArticle:
+			ws.send("NotValidArticle")
 
 
 @app.route('/pediapy')

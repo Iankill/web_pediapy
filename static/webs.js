@@ -1,14 +1,39 @@
+function onKeyPress(){
+    document.getElementById("article").addEventListener('keypress', function (e) {
+    var key = e.which || e.keyCode;
+    if (key == 13) {
+      retrievePhilosophy()
+    }
+});
+}
+
+
+
 function clearAll(){
-	document.getElementById("article-list").innerHTML = '';
-	document.getElementById("number").innerHTML = "0"; 
-    document.getElementById("article").value = "";
+	var article_list = document.getElementById("article-list");
+    if (article_list != null) {
+        article_list.innerHTML = "";
+    }
+	var number = document.getElementById("number");
+    if (number != null) {
+        number.innerHTML = "";
+    }
+
+    var article = document.getElementById("article");
+    if (article != null) {
+        article.value = "";
+    }
 
     if (document.getElementById("rowAlert")){
         var container = document.getElementById("container");
         container.removeChild(document.getElementById("rowAlert"));   
     }
+    
     var result = document.getElementById("result");
-    result.removeChild(document.getElementById("number"));
+    if (number != null) {
+        result.removeChild(document.getElementById("number"));
+    }
+    
 
 }
 
@@ -36,6 +61,10 @@ function handleReceivedMsg(received_msg){
         case "No article Error":
             handleErrors(received_msg);
             break;
+        case "NotValidArticle":
+            var errorMsg = "This is not a valid article. Please enter a valid one."
+            handleErrors(errorMsg);
+            break;
         default:
             var div = document.getElementById("article-list");        
             var newli = createListItem(received_msg);
@@ -47,11 +76,9 @@ function handleReceivedMsg(received_msg){
 
 function retrievePhilosophy(random){
 
-	article = document.getElementById("article").value;
+	var article = document.getElementById("article").value;
 	var div = document.getElementById("article-list");
-    if (div.hasChildNodes() == true){
-        clearAll();
-    }
+    clearAll();
 	var i = 0;
 
 	var ws = new WebSocket("ws://" + location.host + "/echo");
