@@ -9,3 +9,4 @@ lib
 # Other #
 .DS_Store
 .Python
+pediapy/.gitignore
