@@ -1,15 +1,14 @@
-function onKeyPress(){
-    document.getElementById("article").addEventListener('keypress', function (e) {
-    var key = e.which || e.keyCode;
-    if (key == 13) {
-      retrievePhilosophy()
-    }
-});
-}
+document.getElementById("article").addEventListener('keypress', function (e) {
+        if (!e) e = window.event;
+        var key = e.which || e.keyCode;
+        if (key == 13) {
+            retrievePhilosophy(false);
+            return false;
+        }
+    });
 
 
-
-function clearAll(){
+function clearAll(input){
 	var article_list = document.getElementById("article-list");
     if (article_list != null) {
         article_list.innerHTML = "";
@@ -20,7 +19,8 @@ function clearAll(){
     }
 
     var article = document.getElementById("article");
-    if (article != null) {
+    if (article != null && input != false) {
+        console.log("Toto");
         article.value = "";
     }
 
@@ -81,9 +81,9 @@ function handleReceivedMsg(received_msg, path_number){
 
 function retrievePhilosophy(random){
 
-	var article = document.getElementById("article").value;
+	var article_input = document.getElementById("article").value;
 	var div = document.getElementById("article-list");
-    clearAll();
+    clearAll(random);
 	var i = 0;
 
 	var ws = new WebSocket("ws://" + location.host + "/echo");
@@ -101,7 +101,7 @@ function retrievePhilosophy(random){
             	if(random == true){
             		ws.send("Special:Random")
             	} else {
-            		ws.send(article);
+            		ws.send(article_input);
             	}
                 
             };

@@ -5,7 +5,7 @@ Search for Philosophy
 {% endblock %}
 
 {% block content %}
-<script type=text/javascript src="{{ url_for('static', filename='webs.js') }}"></script>
+
 
 <div id="container" class="container">
 	
@@ -19,10 +19,10 @@ Search for Philosophy
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-8 col-md-6">
-			<input id="article" type="text" class="form-control" onkeypress="onKeyPress()" placeholder="Article to search">
+			<input id="article" type="text" class="form-control" placeholder="Article to search">
 		</div>
 		<div class="col-md-4">
-			<button type="button" class="btn btn-primary" onclick="retrievePhilosophy()">Search</button>
+			<button type="button" class="btn btn-primary" onclick="retrievePhilosophy(false)">Search</button>
 			<button type="button" class="btn btn-warning" onclick="retrievePhilosophy(true)">Random</button>	
 		</div>
 			
@@ -42,7 +42,7 @@ Search for Philosophy
 
 </div>
 
-
+<script type=text/javascript src="{{ url_for('static', filename='webs.js') }}"></script>
 
 
 {% endblock%}
